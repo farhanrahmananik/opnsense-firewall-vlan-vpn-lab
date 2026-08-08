@@ -1,0 +1,38 @@
+# Secrets and private key material
+*.key
+*.pem
+*.p12
+*.pfx
+*.secret
+*.secrets
+.env
+.env.*
+secrets/
+
+# OPNsense/firewall exports may contain credentials or key material
+config-*.xml
+opnsense-config*.xml
+firewall-config*.xml
+private-exports/
+
+# Unsanitized packet captures
+*.pcap
+*.pcapng
+captures/raw/
+captures/unsanitized/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+tmp/
+temp/
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
