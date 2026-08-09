@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A validated OPNsense firewall, segmented networking, and WireGuard VPN homelab case study.">
+  <title>OPNsense Firewall Lab | Case Study</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a href="#main-content">Skip to content</a>
+
+  <header>
+    <p>Firewall Lab<span class="brand-detail"> / Portfolio Case Study</span></p>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#controls">Security controls</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#outcome">Outcome</a>
+    </nav>
+    <details class="mobile-nav">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#controls">Security controls</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#outcome">Outcome</a>
+      </nav>
+    </details>
+  </header>
+
+  <main id="main-content">
+    <section id="overview">
+      <p>OPNsense · Hyper-V · WireGuard</p>
+      <h1>Segmented Firewall and Remote-Access VPN Lab</h1>
+      <p>
+        A local-only homelab demonstrating firewall administration, isolated network zones,
+        least-privilege traffic policy, outbound connectivity, encrypted remote access, and
+        evidence-led troubleshooting.
+      </p>
+      <p class="hero-actions">
+        <a class="button" href="https://github.com/farhanrahmananik/opnsense-firewall-vlan-vpn-lab" target="_blank" rel="noopener noreferrer">
+          View GitHub Repository <span aria-hidden="true">↗</span>
+        </a>
+      </p>
+      <dl>
+        <div><dt>Platform</dt><dd>OPNsense on Hyper-V</dd></div>
+        <div><dt>Network zones</dt><dd>WAN, LAN, DMZ, SOC/Test, VPN</dd></div>
+        <div><dt>Validation</dt><dd>Firewall logs, client tests, and packet capture</dd></div>
+        <div><dt>Exposure</dt><dd>Safe local-only lab</dd></div>
+      </dl>
+    </section>
+
+    <section id="architecture">
+      <p>Architecture</p>
+      <h2>Trust boundaries built for controlled testing</h2>
+      <p>
+        OPNsense-FW01 routes and filters traffic between a DHCP-based WAN connection and four
+        dedicated lab networks. Management remains on the trusted LAN and is not exposed publicly.
+      </p>
+
+      <figure class="architecture-diagram">
+        <figcaption>Validated Hyper-V network path</figcaption>
+        <div class="diagram-backbone">
+          <div class="diagram-node diagram-node--wan">
+            <span>WAN</span>
+            <strong>Hyper-V Default Switch</strong>
+            <small>hn0 · DHCP</small>
+          </div>
+          <div class="diagram-connector" aria-hidden="true">↓</div>
+          <div class="diagram-node diagram-node--firewall">
+            <span>Firewall / Router</span>
+            <strong>OPNsense-FW01</strong>
+            <small>Routing · filtering · NAT · VPN</small>
+          </div>
+          <div class="diagram-connector" aria-hidden="true">↓</div>
+        </div>
+        <div class="zone-grid" aria-label="Internal network zones">
+          <div class="zone-node zone-node--lan">
+            <span>LAN</span>
+            <strong>10.10.10.0/24</strong>
+            <small>hn1 · Gateway 10.10.10.1</small>
+          </div>
+          <div class="zone-node zone-node--dmz">
+            <span>DMZ</span>
+            <strong>10.10.20.0/24</strong>
+            <small>hn2 / OPT1 · Gateway 10.10.20.1</small>
+          </div>
+          <div class="zone-node zone-node--soc">
+            <span>SOC / Test</span>
+            <strong>10.10.30.0/24</strong>
+            <small>hn3 / OPT2 · Gateway 10.10.30.1</small>
+          </div>
+          <div class="zone-node zone-node--vpn">
+            <span>WireGuard VPN</span>
+            <strong>10.10.40.0/24</strong>
+            <small>wg0 · Gateway 10.10.40.1</small>
+          </div>
+        </div>
+      </figure>
+
+      <table>
+        <caption>Validated lab network zones</caption>
+        <thead>
+          <tr><th scope="col">Zone</th><th scope="col">Interface</th><th scope="col">Network</th><th scope="col">Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">WAN</th><td>hn0</td><td>DHCP</td><td>Outbound lab connectivity</td></tr>
+          <tr><th scope="row">LAN</th><td>hn1</td><td>10.10.10.0/24</td><td>Trusted clients and management</td></tr>
+          <tr><th scope="row">DMZ</th><td>hn2 / OPT1</td><td>10.10.20.0/24</td><td>Isolated service testing</td></tr>
+          <tr><th scope="row">SOC/Test</th><td>hn3 / OPT2</td><td>10.10.30.0/24</td><td>Monitoring and controlled testing</td></tr>
+          <tr><th scope="row">VPN</th><td>wg0</td><td>10.10.40.0/24</td><td>Encrypted remote access</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="controls">
+      <p>Security controls</p>
+      <h2>Policy, services, and encrypted access</h2>
+      <article>
+        <h3>Segmentation</h3>
+        <p>Inter-zone firewall policy limits trust between LAN, DMZ, and SOC/Test networks.</p>
+      </article>
+      <article>
+        <h3>Network services</h3>
+        <p>DHCP, DNS forwarding, NAT, and outbound access were configured and validated within the lab.</p>
+      </article>
+      <article>
+        <h3>WireGuard</h3>
+        <p>
+          WG-Remote-Access uses UDP/51820 and the 10.10.40.0/24 tunnel network. A recent handshake,
+          bidirectional encrypted traffic, and tunnel-side ICMP were validated without recording keys.
+        </p>
+      </article>
+      <article>
+        <h3>Management safety</h3>
+        <p>Administrative access remains on a trusted path; the management interface is not public-facing.</p>
+      </article>
+    </section>
+
+    <section id="evidence">
+      <p>Validated evidence</p>
+      <h2>Traffic decisions confirmed at multiple layers</h2>
+      <figure>
+        <a class="evidence-link" href="assets/images/scope-09-dmz-lan-block-live-view.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size DMZ-to-LAN block evidence">
+          <img src="assets/images/scope-09-dmz-lan-block-live-view.png" alt="OPNsense live firewall log showing DMZ-to-LAN ICMP blocked by the Block DMZ to LAN rule" loading="lazy">
+        </a>
+        <figcaption>DMZ source 10.10.20.198 to LAN destination 10.10.10.1 was blocked; three client probes received no replies.</figcaption>
+      </figure>
+      <figure>
+        <a class="evidence-link" href="assets/images/scope-09-lan-https-pass-details.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size LAN HTTPS pass evidence">
+          <img src="assets/images/scope-09-lan-https-pass-details.png" alt="OPNsense rule details showing permitted LAN HTTPS management traffic" loading="lazy">
+        </a>
+        <figcaption>LAN management traffic from 10.10.10.10 to 10.10.10.1 TCP/443 was passed on hn1 by the anti-lockout rule.</figcaption>
+      </figure>
+      <article>
+        <h3>Packet capture correlation</h3>
+        <p>
+          tcpdump confirmed blocked ICMP arriving on hn2, WireGuard UDP/51820 on hn0, and inner
+          10.10.40.2-to-10.10.40.1 ICMP on wg0. The VPN ping returned 3/3 replies.
+        </p>
+      </article>
+    </section>
+
+    <section id="outcome">
+      <p>Outcome</p>
+      <h2>A repeatable, evidence-backed firewall lab</h2>
+      <p>
+        The finished environment demonstrates network segmentation, firewall-rule validation,
+        essential network services, VPN operation, logging, packet capture, and a structured
+        troubleshooting workflow in an isolated Hyper-V environment.
+      </p>
+      <h3>Production considerations</h3>
+      <ul>
+        <li>Use centralized, access-controlled log retention.</li>
+        <li>Restrict management access to dedicated trusted networks.</li>
+        <li>Handle packet captures as potentially sensitive data.</li>
+        <li>Keep VPN private keys, credentials, and public addressing out of public documentation.</li>
+      </ul>
+      <p><strong>Limitation:</strong> This case study validates an isolated homelab policy, not a production deployment.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      OPNsense Firewall, VLAN and VPN Lab · Sanitized portfolio documentation ·
+      <a href="https://github.com/farhanrahmananik/opnsense-firewall-vlan-vpn-lab" target="_blank" rel="noopener noreferrer">GitHub repository</a>
+    </p>
+  </footer>
+</body>
+</html>
