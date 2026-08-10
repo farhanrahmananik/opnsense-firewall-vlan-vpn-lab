@@ -9,7 +9,6 @@
 - [x] Local README, evidence-index, and case-study links resolve to existing files.
 - [x] The Git diff passes whitespace/error checks.
 - [x] Captures exclude passwords, VPN private keys, authentication material, and real public IP addresses.
-- [x] LinkedIn, CV, and interview wording is limited to documented implementation and validation evidence.
 
 ## Already validated on the current live site
 
