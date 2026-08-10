@@ -33,6 +33,9 @@ This project demonstrates the design, implementation, and validation of an isola
 ## Case Study and Evidence
 
 - [Live case study](https://farhanrahmananik.github.io/opnsense-firewall-vlan-vpn-lab/)
+- [Complete portfolio evidence index](docs/evidence/scope-11-portfolio-evidence-index.md)
+- [LinkedIn, CV, and interview wording](docs/portfolio-wording.md)
+- [Final publish-validation checklist](docs/evidence/scope-11-final-validation-checklist.md)
 - [Detailed Scope 9 evidence](docs/evidence/scope-09-logging-packet-capture-troubleshooting.md)
 - [Sanitized DMZ-to-LAN block screenshot](assets/screenshots/scope-09-dmz-lan-block-live-view.png)
 - [Sanitized LAN HTTPS pass screenshot](assets/screenshots/scope-09-lan-https-pass-details.png)
