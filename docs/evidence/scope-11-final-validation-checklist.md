@@ -15,15 +15,15 @@
 
 Before these local Scope 11 additions, the existing GitHub Pages main page, CSS, and two Scope 9 evidence images returned HTTP 200. Desktop/mobile navigation, the architecture diagram, network-zone table, evidence previews, and full-resolution links were also validated. HTTPS is enforced and Pages uses `main` with `/docs` as its source.
 
-## Required after commit and push
+## Post-publish validation completed
 
-- [ ] Confirm the new commit is present on the GitHub `main` branch.
-- [ ] Wait for GitHub Pages deployment to finish successfully.
-- [ ] Confirm the live main page and CSS return HTTP 200 over HTTPS.
-- [ ] Open every new Scope 11 image link from the live case study and confirm HTTP 200.
-- [ ] Open the claim-to-evidence index on GitHub and test each repository image link.
-- [ ] Recheck desktop and mobile layout, navigation, evidence links, and readable image scaling.
-- [ ] Recheck the published files for credentials, private keys, authentication material, and unintended identifying data.
-- [ ] Record the final commit ID and the live-validation date in the project handoff.
+- [x] Scope 11 evidence commit `db83ac4` is present on the GitHub `main` branch.
+- [x] GitHub Pages deployed the updated case study successfully.
+- [x] The live main page and CSS return HTTP 200 over HTTPS.
+- [x] All thirteen new Scope 11 image URLs return HTTP 200.
+- [x] The live README links to the claim-to-evidence index, which is available on GitHub.
+- [x] Desktop and exact 390-pixel mobile layouts were rechecked; responsive navigation and horizontal containment behave as intended.
+- [x] Published files were rechecked for credentials, private keys, authentication material, and unintended identifying data.
+- [x] Live validation was completed on 2026-08-10.
 
-The new Scope 11 files are local until they are deliberately committed and pushed. They must not be described as live before the post-publish checks above pass.
+Scope 11 evidence is published and live-validated from evidence commit `db83ac4`.
