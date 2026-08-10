@@ -1,4 +1,4 @@
-# OPNsense Firewall, VLAN and VPN Lab
+# OPNsense Firewall, Network Segmentation and VPN Lab
 
 > **Status:** Completed and validated local-only homelab.
 
